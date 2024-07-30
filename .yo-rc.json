@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.20.3",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.12.0"
+    },
+    "version": "1.19.0",
+    "libraryName": "fluent-v-9-poc",
+    "libraryId": "20fe660d-fb2c-443e-b3a6-9605f3509e10",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "fluent-v-9-poc",
+    "solutionShortDescription": "fluent-v-9-poc description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

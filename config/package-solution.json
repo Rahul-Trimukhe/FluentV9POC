@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "fluent-v-9-poc-client-side-solution",
+    "id": "20fe660d-fb2c-443e-b3a6-9605f3509e10",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.19.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "fluent-v-9-poc description"
+      },
+      "longDescription": {
+        "default": "fluent-v-9-poc description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "fluent-v-9-poc Feature",
+        "description": "The feature that activates elements of the fluent-v-9-poc solution.",
+        "id": "421ae26d-1163-48b5-8ace-c31a84c30c72",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/fluent-v-9-poc.sppkg"
+  }
+}

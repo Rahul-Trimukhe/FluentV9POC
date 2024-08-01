@@ -10,42 +10,54 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'FluentUiV9PocWebPartStrings';
 import FluentUiV9Poc from './components/FluentUiV9Poc';
-import { IFluentUiV9PocProps } from './components/IFluentUiV9PocProps';
-import { FluentProvider, FluentProviderProps, webDarkTheme } from '@fluentui/react-components';
+import { IFluentUiV9PocProps } from './components/IFluentUiV9PocProps';  
+import { ContextProvider } from './components/context';
 
 export interface IFluentUiV9PocWebPartProps {
   description: string;
+
+}
+
+export enum AppMode {
+  SharePoint, SharePointLocal, Teams, TeamsLocal, Office, OfficeLocal, Outlook, OutlookLocal
 }
 
 export default class FluentUiV9PocWebPart extends BaseClientSideWebPart<IFluentUiV9PocWebPartProps> {
 
   private _isDarkTheme: boolean = false;
+  private _appMode: AppMode = AppMode.SharePoint;
   private _environmentMessage: string = '';
 
   public render(): void {
     const element: React.ReactElement<IFluentUiV9PocProps> = React.createElement(
       FluentUiV9Poc,
       {
-        description: this.properties.description,
-        isDarkTheme: this._isDarkTheme,
-        environmentMessage: this._environmentMessage,
-        hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
       }
-    );
+    ); 
 
-    const themeProvider: React.ReactElement<FluentProviderProps> = React.createElement(
-      FluentProvider,
-      {
-        theme: webDarkTheme,
-        children: element
-      }
-    );
+    const cntextProvider = React.createElement(ContextProvider, {
+      children: element,
+      context: this.context, 
+      isDarkTheme: this._isDarkTheme,
+      _appMode: this._appMode,
+      environmentMessage: this._environmentMessage,
+      hasTeamsContext: !!this.context.sdks.microsoftTeams,
+    });
 
-    ReactDom.render(themeProvider, this.domElement);
+    ReactDom.render(cntextProvider, this.domElement);
   }
 
-  protected onInit(): Promise<void> {
+  protected async onInit(): Promise<void> {
+    const _l = this.context.isServedFromLocalhost;
+    if(this.context.sdks.microsoftTeams) {
+      const teamsCtx = await this.context.sdks.microsoftTeams.teamsJs.app.getContext();
+      switch(teamsCtx.app.host.name.toLowerCase()) {
+        case 'teams': _l ? AppMode.TeamsLocal : AppMode.Teams;
+        case 'outlook': _l ? AppMode.OutlookLocal : AppMode.Outlook;
+        case 'office': _l ? AppMode.Office : AppMode.OfficeLocal;
+      }
+    } else this._appMode = _l ? AppMode.SharePointLocal : AppMode.SharePoint;
+
     return this._getEnvironmentMessage().then(message => {
       this._environmentMessage = message;
     });

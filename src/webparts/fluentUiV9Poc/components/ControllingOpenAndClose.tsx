@@ -11,8 +11,10 @@ import {
 } from "@fluentui/react-components";
 
 export const ControllingOpenAndClose = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   return (
+    <>
+    <Button appearance="primary" onClick={()=>setOpen(true)}>Do Something</Button>
     <Dialog open={open} onOpenChange={(event, data) => setOpen(data.open)}>
       <DialogSurface>
         <DialogBody>
@@ -32,5 +34,6 @@ export const ControllingOpenAndClose = () => {
         </DialogBody>
       </DialogSurface>
     </Dialog>
+    </>
   );
 };
